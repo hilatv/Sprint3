@@ -1,5 +1,9 @@
 package com.example.Yerizk.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="Empleado")
@@ -14,19 +18,37 @@ public class Empleado {
     @Column(name="correo")
     private String correo;
 
-    @Column(name="empresa")
-    private String empresa;
+    //@Column(name="empresa")
+    //private String empresa;
 
     @Column(name="rol")
     private String rol;
 
+    @ManyToOne(cascade = CascadeType.DETACH)
+    private Empresa empresa;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "empleado")
+    private List<MovimientoDinero> movimientosDinero;
+
+
     public Empleado(){}
 
-    public Empleado(String nombre, String correo, String empresa, String rol) {
+
+    public Empleado(String nombre, String correo, String rol, Empresa empresa, List<MovimientoDinero> movimientosDinero) {
         this.nombre = nombre;
         this.correo = correo;
-        this.empresa = empresa;
         this.rol = rol;
+        this.empresa = empresa;
+        this.movimientosDinero = movimientosDinero;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -45,20 +67,28 @@ public class Empleado {
         this.correo = correo;
     }
 
-    public String getEmpresa() {
-        return this.empresa;
-    }
-
-    public void setEmpresa(String empresa) {
-        this.empresa = empresa;
-    }
-
     public String getRol() {
         return this.rol;
     }
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public List<MovimientoDinero> getMovimientosDinero() {
+        return movimientosDinero;
+    }
+
+    public void setMovimientosDinero(List<MovimientoDinero> movimientosDinero) {
+        this.movimientosDinero = movimientosDinero;
     }
 
     public static void main(String[] args) {

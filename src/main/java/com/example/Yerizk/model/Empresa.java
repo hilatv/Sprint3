@@ -1,7 +1,10 @@
 package com.example.Yerizk.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="Empresa")
@@ -18,18 +21,30 @@ public class Empresa {
     @Column(name="nit")
     private String nit;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "empresa")
+    private List<Empleado> empleados;
+
 
     public Empresa() {
     }
 
-    public Empresa(String nombre, String direccion, String telefono, String nit) {
+    public Empresa(String nombre, String direccion, String telefono, String nit, List<Empleado> empleados) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.nit = nit;
+        this.empleados = empleados;
 
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getNombre() {
         return this.nombre;
@@ -61,6 +76,14 @@ public class Empresa {
 
     public void setNit(String nit) {
         this.nit = nit;
+    }
+
+    public List<Empleado> getEmpleados() {
+        return empleados;
+    }
+
+    public void setEmpleados(List<Empleado> empleados) {
+        this.empleados = empleados;
     }
 
     public static void main(String[] args) {

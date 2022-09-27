@@ -21,20 +21,30 @@ public class MovimientoDinero {
     @Column(name="conceptoMovimiento")
     private String conceptoMovimiento;
 
-    @Column(name="usuarioEncargado")
-    private String usuarioEncargado;
+    //@Column(name="usuarioEncargado")
+    //private String usuarioEncargado;
+
+    @ManyToOne()
+    private Empleado empleado;
 
     public MovimientoDinero(){}
 
 
-    public MovimientoDinero(String montoDinero, String montoPositivo, String montoNegativo, String conceptoMovimiento, String usuarioEncargado) {
+    public MovimientoDinero(String montoDinero, String montoPositivo, String montoNegativo, String conceptoMovimiento, Empleado empleado) {
         this.montoDinero = montoDinero;
         this.montoPositivo = montoPositivo;
         this.montoNegativo = montoNegativo;
         this.conceptoMovimiento = conceptoMovimiento;
-        this.usuarioEncargado = usuarioEncargado;
+        this.empleado = empleado;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getMontoDinero() {
         return this.montoDinero;
@@ -68,12 +78,12 @@ public class MovimientoDinero {
         this.conceptoMovimiento = conceptoMovimiento;
     }
 
-    public String getUsuarioEncargado() {
-        return this.usuarioEncargado;
+    public Empleado getEmpleado() {
+        return empleado;
     }
 
-    public void setUsuarioEncargado(String usuarioEncargado) {
-        this.usuarioEncargado = usuarioEncargado;
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
     }
 
     public static void main(String[] args) {
